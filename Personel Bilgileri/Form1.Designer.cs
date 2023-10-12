@@ -59,6 +59,7 @@
             this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader9 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader7 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader8 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.gBPersonelBilgileri.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBResim)).BeginInit();
             this.SuspendLayout();
@@ -209,6 +210,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(201, 26);
             this.textBox3.TabIndex = 8;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox2
             // 
@@ -216,6 +218,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(201, 26);
             this.textBox2.TabIndex = 7;
+            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // textBox1
             // 
@@ -223,6 +226,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(201, 26);
             this.textBox1.TabIndex = 6;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label6
             // 
@@ -289,7 +293,8 @@
             this.columnHeader5,
             this.columnHeader6,
             this.columnHeader9,
-            this.columnHeader7});
+            this.columnHeader7,
+            this.columnHeader8});
             this.lVList.FullRowSelect = true;
             this.lVList.GridLines = true;
             this.lVList.HideSelection = false;
@@ -304,60 +309,66 @@
             // columnHeader1
             // 
             this.columnHeader1.Text = "Personel ID";
-            this.columnHeader1.Width = 95;
+            this.columnHeader1.Width = 83;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Ad";
             this.columnHeader2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader2.Width = 95;
+            this.columnHeader2.Width = 83;
             // 
             // columnHeader3
             // 
             this.columnHeader3.Text = "Soyad";
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader3.Width = 95;
+            this.columnHeader3.Width = 83;
             // 
             // columnHeader4
             // 
             this.columnHeader4.Text = "Doğum Tarihi";
             this.columnHeader4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader4.Width = 95;
+            this.columnHeader4.Width = 83;
             // 
             // columnHeader5
             // 
             this.columnHeader5.Text = "Telefon";
             this.columnHeader5.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader5.Width = 95;
+            this.columnHeader5.Width = 83;
             // 
             // columnHeader6
             // 
             this.columnHeader6.Text = "Email";
             this.columnHeader6.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader6.Width = 95;
+            this.columnHeader6.Width = 83;
             // 
             // columnHeader9
             // 
             this.columnHeader9.Text = "İşe Giriş Tarihi";
             this.columnHeader9.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader9.Width = 95;
+            this.columnHeader9.Width = 83;
             // 
             // columnHeader7
             // 
             this.columnHeader7.Text = "Adres";
             this.columnHeader7.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnHeader7.Width = 95;
+            this.columnHeader7.Width = 83;
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "Resim Uzantısı";
+            this.columnHeader8.Width = 83;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.BackColor = System.Drawing.Color.Gainsboro;
             this.ClientSize = new System.Drawing.Size(773, 549);
             this.Controls.Add(this.lVList);
             this.Controls.Add(this.gBPersonelBilgileri);
             this.Name = "Form1";
-            this.Text = "Personel Bilgileri";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "PersonelId";
             this.gBPersonelBilgileri.ResumeLayout(false);
             this.gBPersonelBilgileri.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pBResim)).EndInit();
@@ -398,6 +409,7 @@
 		private System.Windows.Forms.ColumnHeader columnHeader7;
         private System.Windows.Forms.ColumnHeader columnHeader9;
         private System.Windows.Forms.TextBox txtAdres;
+        private System.Windows.Forms.ColumnHeader columnHeader8;
     }
 }
 

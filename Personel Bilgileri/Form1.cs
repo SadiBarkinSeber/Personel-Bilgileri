@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
@@ -16,7 +17,7 @@ namespace Personel_Bilgileri
 {
     public partial class Form1 : Form
     {
-        private string dosyaYolu;
+        
         public Form1()
         {
             InitializeComponent();
@@ -29,6 +30,8 @@ namespace Personel_Bilgileri
 
         List<Kisi> People = new List<Kisi>();
 
+        string dosyaYolu;
+
         #region Resim Seç Butonu İşlemleri
         public void btnResimSec_Click(object sender, EventArgs e)
         {
@@ -36,7 +39,7 @@ namespace Personel_Bilgileri
             ofd.Filter = "Jpg (.jpg) | *.jpg | Png (.png) | *.png";
             ofd.ShowDialog();
             
-            string dosyaYolu = ofd.FileName;
+            dosyaYolu = ofd.FileName;
             pBResim.ImageLocation = dosyaYolu;
         }
         #endregion 
@@ -53,6 +56,7 @@ namespace Personel_Bilgileri
             person.Email = textBox6.Text;
             person.IseGirisTarihi = dtpIseGirisTarihi.Value;
             person.Adress = txtAdres.Text;
+            person.DosyaYolu = dosyaYolu;
 
             bool durum = HataDurumlari(person.PersonelID, person.DogumTarihi, person.Email, person.IseGirisTarihi);
 
@@ -63,15 +67,16 @@ namespace Personel_Bilgileri
             else
             {
                 People.Add(person);
+                ListViewiDoldur();
+                Sifirla();
             }
-            
-            ListViewiDoldur();
         }
         #endregion
 
         #region ListViewiDoldur()
         private void ListViewiDoldur()
         {
+            
             lVList.Items.Clear();
             foreach (Kisi person in People)
             {
@@ -84,6 +89,7 @@ namespace Personel_Bilgileri
                 lvi.SubItems.Add(person.Email);
                 lvi.SubItems.Add(person.IseGirisTarihi.ToString("yyy-MM-dd"));
                 lvi.SubItems.Add(person.Adress);
+                lvi.SubItems.Add(person.DosyaYolu);
 
                 lVList.Items.Add(lvi);
             }
@@ -105,6 +111,7 @@ namespace Personel_Bilgileri
             string Email = textBox6.Text;
             DateTime IseGirisTarihi = dtpIseGirisTarihi.Value;
             string Adres = txtAdres.Text;
+            string DosyaYolu = dosyaYolu;
 
             selectedRow.SubItems[0].Text = ID;
             selectedRow.SubItems[1].Text = Ad;
@@ -114,6 +121,7 @@ namespace Personel_Bilgileri
             selectedRow.SubItems[5].Text = Email;
             selectedRow.SubItems[6].Text = IseGirisTarihi.ToString("yyyy-MM-dd");
             selectedRow.SubItems[7].Text = Adres;
+            selectedRow.SubItems[8].Text = DosyaYolu.ToString();
         }
         #endregion
 
@@ -144,6 +152,18 @@ namespace Personel_Bilgileri
             //Listte seçim yaptıktan sonra
             if (lVList.SelectedItems.Count == 1)
             {
+                ListViewItem selectedRow = lVList.SelectedItems[0];
+
+                textBox1.Text = selectedRow.SubItems[0].Text;
+                textBox2.Text = selectedRow.SubItems[1].Text;
+                textBox3.Text = selectedRow.SubItems[2].Text;
+                dtpDogumTarihi.Value = DateTime.ParseExact(selectedRow.SubItems[3].Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                mtbTelefon.Text = selectedRow.SubItems[4].Text;
+                textBox6.Text = selectedRow.SubItems[5].Text;
+                dtpIseGirisTarihi.Value = DateTime.ParseExact(selectedRow.SubItems[6].Text, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                txtAdres.Text = selectedRow.SubItems[7].Text;
+                string resimDosyaYolu = selectedRow.SubItems[8].Text;
+
                 btnKaydet.Enabled = false;
 
                 textBox1.BackColor = Color.LightSteelBlue;
@@ -154,9 +174,21 @@ namespace Personel_Bilgileri
                 textBox6.BackColor = Color.LightSteelBlue;
                 dtpIseGirisTarihi.CalendarTitleBackColor = Color.LightSteelBlue;
                 txtAdres.BackColor = Color.LightSteelBlue;
+                pBResim.ImageLocation = resimDosyaYolu;
             }
             else
             {
+                textBox1.Text = string.Empty;
+                textBox2.Text = string.Empty;
+                textBox3.Text = string.Empty;
+                dtpDogumTarihi.Value = DateTime.Today;
+                mtbTelefon.Text = string.Empty;
+                textBox6.Text = string.Empty;
+                dtpIseGirisTarihi.Value = DateTime.Today;
+                txtAdres.Text = string.Empty;
+                dosyaYolu = string.Empty;
+                pBResim.Image = null;
+
                 btnKaydet.Enabled = true;
                 btnResimSec.Enabled = true;
 
@@ -246,6 +278,52 @@ namespace Personel_Bilgileri
         private void dtpDogumTarihi_ValueChanged(object sender, EventArgs e)
         {
             dtpIseGirisTarihi.MinDate = dtpDogumTarihi.Value;
+        }
+        #endregion
+
+        #region Sifirla()
+        private void Sifirla()
+        {
+            textBox1.Text = string.Empty;
+            textBox2.Text = string.Empty;
+            textBox3.Text = string.Empty;
+            dtpDogumTarihi.Value = DateTime.Today;
+            mtbTelefon.Text = string.Empty;
+            textBox6.Text = string.Empty;
+            dtpIseGirisTarihi.Value = DateTime.Today;
+            txtAdres.Text = string.Empty;
+            dosyaYolu = string.Empty;
+            pBResim.ImageLocation = null;
+        }
+        #endregion
+
+        #region Textboxların Düzeni
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            int result;
+            if (!int.TryParse(textBox1.Text, out result))
+            {
+                MessageBox.Show("Lütfen sadece sayısal değer giriniz.");
+                textBox1.Clear();
+            }
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(textBox2.Text) && !textBox2.Text.All(char.IsLetter))
+            {
+                MessageBox.Show("Lütfen yalnızca harf karakterleri giriniz.");
+                textBox2.Clear();
+            }
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(textBox3.Text) && !textBox3.Text.All(char.IsLetter))
+            {
+                MessageBox.Show("Lütfen yalnızca harf karakterleri giriniz.");
+                textBox3.Clear();
+            }
         }
         #endregion
     }

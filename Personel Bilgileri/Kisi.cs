@@ -9,6 +9,7 @@ namespace Personel_Bilgileri
 {
 	internal class Kisi
 	{
+		
 		public string PersonelID { get; set; }
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
@@ -17,5 +18,6 @@ namespace Personel_Bilgileri
 		public string Email { get; set; }
 		public DateTime IseGirisTarihi { get; set; }
 		public string Adress { get; set; }
+		public string DosyaYolu { get; set; }
 	}
 }
